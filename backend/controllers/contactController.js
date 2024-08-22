@@ -38,6 +38,11 @@ const getContact=asyncHandler(async (req,res)=>{
 */
 const createContact=asyncHandler(async (req,res)=>{
     const {name,email,phone}=req.body;
+    if(!name ||!email ||!phone){
+        logger.warn("missing required fields");
+        res.status(400);
+        throw new Error("Missing required fields");
+    }
     const contact=new Contact({
         user:req.userId,
         name,
